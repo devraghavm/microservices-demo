@@ -4,7 +4,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+*.log
+
 ### STS ###
+.java-version
 .apt_generated
 .classpath
 .factorypath
