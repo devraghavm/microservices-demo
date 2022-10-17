@@ -1,10 +1,12 @@
 package com.raghav.microservices.demo.elastic.query.service.config;
 
 import com.raghav.microservices.demo.config.UserConfigData;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
     private final UserConfigData userConfigData;
+
+    @Value("${security.paths-to-ignore}")
+    private String[] pathsToIgnore;
 
     public WebSecurityConfig(UserConfigData userConfigData) {
         this.userConfigData = userConfigData;
@@ -31,6 +36,12 @@ public class WebSecurityConfig {
                 .and()
                 .csrf().disable();
         return http.build();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring()
+                           .antMatchers(pathsToIgnore);
     }
 
     @Bean

@@ -41,6 +41,7 @@
         <spring-cloud.version>3.1.4</spring-cloud.version>
         <spring-cloud-dependencies.version>2021.0.4</spring-cloud-dependencies.version>
         <elasticsearch.version>7.17.6</elasticsearch.version>
+        <springdoc-openapi-ui.version>1.6.11</springdoc-openapi-ui.version>
     </properties>
 
     <repositories>
@@ -172,6 +173,11 @@
                 <groupId>org.springframework.retry</groupId>
                 <artifactId>spring-retry</artifactId>
                 <version>${spring-retry.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc-openapi-ui.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.confluent</groupId>
