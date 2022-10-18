@@ -15,7 +15,7 @@ twitter-to-kafka-service:
   enable-v2-tweets: true
   twitter-v2-base-url: https://api.twitter.com/2/tweets/search/stream?tweet.fields=created_at&expansions=author_id
   twitter-v2-rules-base-url: https://api.twitter.com/2/tweets/search/stream/rules
-  twitter-v2-bearer-token: ${TWITTER_BEARER_TOKEN:AAAAAAAAAAAAAAAAAAAAAOY0eAEAAAAAXoKJ3Oww4Wwln2b6TbHwMCxiOto%3Ds5GkzzzBtqY9gUNBBuLpPpB1H580FOZZYxmzprXFCFGksptRWS}
+  twitter-v2-bearer-token: ${TWITTER_BEARER_TOKEN:<TWITTER_BEARER_TOKEN>}
 
 retry-config:
   initial-interval-ms: 1000
