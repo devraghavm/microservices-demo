@@ -1,0 +1,35 @@
+server:
+  port: 8184
+  servlet:
+    context-path: /elastic-query-web-client
+
+elastic-query-web-client:
+  web-client:
+    connect-timeout-ms: 10000
+    read-timeout-ms: 10000
+    write-timeout-ms: 10000
+    max-in-memory-size: 10485760 # 10 MB
+    content-type: 'application/vnd.api.v1+json'
+    accept-type: 'application/vnd.api.v1+json'
+    base-url: 'http://elastic-query-service/elastic-query-service/documents'
+    service-id: elastic-query-service
+    instances:
+      - id: elastic-query-service-1
+        host: localhost
+        port: 8183
+      - id: elastic-query-service-2
+        host: localhost
+        port: 8185
+  query-by-text:
+    method: POST
+    uri: "/get-document-by-text"
+    accept: ${elastic-query-web-client.webclient.accept-type}
+
+spring:
+  thymeleaf:
+    cache: false
+
+user-config:
+  username: test
+  password: '{cipher}54fe38185b92a860bb91e76304a3b509dec6a93d2a986d704f5ec3a27e2e95ef'
+  roles: USER
