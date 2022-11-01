@@ -6,6 +6,7 @@ target/
 
 *.log
 playground
+postgres_data
 
 ### STS ###
 .java-version

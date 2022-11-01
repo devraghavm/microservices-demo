@@ -1,10 +1,61 @@
 elastic-query-service:
   version: v1
+  custom-audience: elastic-query-service
+  webclient:
+    connect-timeout-ms: 10000
+    read-timeout-ms: 10000
+    write-timeout-ms: 10000
+    max-in-memory-size: 10485760 # 10 MB
+    content-type: 'application/vnd.api.v1+json'
+    accept-type: 'application/vnd.api.v1+json'
+    query-type: 'ANALYTICS_DATABASE'
+  query-from-kafka-state-store:
+    method: GET
+    uri: "http://localhost:8187/kafka-streams-service/get-word-count-by-word/{word}"
+    accept: ${elastic-query-service.webclient.accept-type}
+  query-from-analytics-database:
+    method: GET
+    uri: "http://localhost:8188/analytics-service/get-word-count-by-word/{word}"
+    accept: ${elastic-query-service.webclient.accept-type}
 
 server:
   port: 8183
   servlet:
     context-path: /elastic-query-service
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9091/realms/microservices-realm
+          jwk-set-uri: http://localhost:9091/realms/microservices-realm/protocol/openid-connect/certs
+      client:
+        registration:
+          keycloak:
+            client-id: 'elastic-query-service'
+            client-secret: '{cipher}9619b7a55d22fdbb34a2f9a6059f071676e1b1ba8ad7c621d118c977f4966fc69bcb5caa8cf06166895edb9495b85e5b007acd251fd17d133e938f923bc18a87'
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            tokenUri: http://localhost:9091/realms/microservices-realm/protocol/openid-connect/token
+  jpa:
+    open-in-view: false
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=public&binaryTransfer=true&reWriteBatchedInserts=true
+    username: postgres
+    password: '{cipher}883b7ff28703726a307e4147977c29f39120cccbfca0ebf5f294c88f665b09c5'
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    initialization-mode: always
 
 elastic-query-config:
   text-field: text
