@@ -10,7 +10,7 @@ spring:
         git:
           uri: https://github.com/devraghavm/spring-cloud-config-server-repository
           username: devraghavm
-          password: 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
+          password: XXXXXX
           default-label: main
           clone-on-start: true
     fail-fast: true
